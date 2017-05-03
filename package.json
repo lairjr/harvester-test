@@ -1,0 +1,27 @@
+{
+  "name": "harvesterjs-example",
+  "version": "1.0.0",
+  "description": "Example project to showcase harvesterjs",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/agco-fuse/harvesterjs-example.git"
+  },
+  "author": "Hive team",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/agco-fuse/harvesterjs-example/issues"
+  },
+  "homepage": "https://github.com/agco-fuse/harvesterjs-example#readme",
+  "dependencies": {
+    "harvesterjs": "git+https://github.com/agco/harvesterjs.git#067b30d1c7fbbcddd4dc5fcdb152406904f87477",
+    "joi": "^10.2.0"
+  },
+  "devDependencies": {
+    "http-as-promised": "^1.1.0"
+  }
+}

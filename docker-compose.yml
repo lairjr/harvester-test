@@ -1,0 +1,61 @@
+version: '3'
+services:
+  web:
+    hostname: app
+    build: .
+    environment:
+      MONGODB_URL: "mongodb://mongodb1"
+      PORT: 5000
+    ports:
+      - 5000:5000
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app
+    depends_on:
+      - mongodb1
+    links:
+      - mongodb1
+  events:
+    build: .
+    command: bash -c 'node events.js'
+    environment:
+      DEBUG: "events-reader"
+    depends_on:
+      - mongodb1
+    volumes:
+      - .:/usr/src/app
+    links:
+      - mongodb1
+    environment:
+      MONGODB_URL: "mongodb://mongodb1"
+
+  mongodb3:
+    image: mongo:2.6.8
+    ports: 
+      - 27019:27017
+      - 28019:28017
+    command: mongod --nojournal --noprealloc --replSet "rs" --smallfiles --oplogSize 128
+
+  mongodb2:
+    image: mongo:2.6.8
+    ports: 
+      - 27018:27017
+      - 28018:28017
+    command: mongod --nojournal --noprealloc --replSet "rs" --smallfiles --oplogSize 128
+
+  mongodb1:
+    image: mongo:2.6.8
+    ports: 
+      - 27017:27017
+      - 28017:28017
+    command: mongod --nojournal --noprealloc --replSet "rs" --smallfiles --oplogSize 128
+
+  dbConfig:
+    image: mongo:2.6.8
+    volumes:
+      - ./scripts/:/scripts
+    command: bash -c "chmod +x /scripts/mongodb_config.sh && ./scripts/mongodb_config.sh"
+    depends_on:
+      - mongodb1
+    links:
+      - mongodb1
