@@ -11,7 +11,7 @@ describe('CRUD operations', () => {
     return server = null;
   });
 
-  describe('POST /authors', () => {
+  describe('POST /books', () => {
     beforeEach(() => app.adapter.db.models.author.remove({}));
 
     it('creates a book', (done) => {
