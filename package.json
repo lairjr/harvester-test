@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/agco-fuse/harvesterjs-example.git"
+    "url": "https://github.com/agco-fuse/harvester-test"
   },
   "author": "Hive team",
   "license": "ISC",
@@ -20,8 +20,5 @@
   "dependencies": {
     "harvesterjs": "git+https://github.com/agco/harvesterjs.git#067b30d1c7fbbcddd4dc5fcdb152406904f87477",
     "joi": "^10.2.0"
-  },
-  "devDependencies": {
-    "http-as-promised": "^1.1.0"
   }
 }
