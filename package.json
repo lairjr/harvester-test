@@ -20,7 +20,7 @@
   "homepage": "https://github.com/agco-fuse/harvesterjs-example#readme",
   "dependencies": {
     "harvesterjs": "git+https://github.com/agco/harvesterjs.git#067b30d1c7fbbcddd4dc5fcdb152406904f87477",
-    "joi": "^10.2.0"
+    "joi": "^10.4.1"
   },
   "devDependencies": {
     "chai": "^3.5.0",
