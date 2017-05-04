@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "npm run acceptance",
+    "acceptance": "mocha --opts spec/acceptance/mocha.opts spec/acceptance/*.js"
   },
   "repository": {
     "type": "git",
@@ -20,5 +21,10 @@
   "dependencies": {
     "harvesterjs": "git+https://github.com/agco/harvesterjs.git#067b30d1c7fbbcddd4dc5fcdb152406904f87477",
     "joi": "^10.2.0"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^3.3.0",
+    "superagent": "^3.5.2"
   }
 }
