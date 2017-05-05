@@ -1,5 +1,6 @@
 const harvestApp = require('./app/api');
+const port = process.env.PORT || 3000;
 
-const onListen = () => console.log(`listenAing on port ${process.env.PORT}`);
+const onListen = () => console.log(`listening on port ${port}`);
 
-harvestApp.listen(process.env.PORT, onListen);
+harvestApp.listen(port, onListen);
