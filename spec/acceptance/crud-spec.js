@@ -93,4 +93,25 @@ describe('CRUD operations', () => {
         });
     });
   });
+
+  describe('DELETE /authors', () => {
+    let authorId;
+
+    beforeEach(() => {
+      return app.adapter.create('author', { name: 'Stephen King' })
+        .then(author => authorId = author.id);
+    });
+
+    it('deletes an existing author', (done) => {
+      request
+        .del(`http://localhost:3000/authors/${1200}`)
+        .set('Content-Type', 'application/json')
+        .end((err, res) => {
+          expect(res.status).to.be.equal(204);
+          app.adapter.find('author', {}).then(author => {
+            done(err);
+          });
+        });
+    });
+  });
 });
