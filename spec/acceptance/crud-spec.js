@@ -18,7 +18,10 @@ describe('CRUD operations', () => {
   };
 
   beforeEach((done) => {
-    app = harvesterApp.listen(3000, () => done());
+    app = harvesterApp.listen(3000, () => {
+      app.adapter.db.models.author.remove({})
+      done();
+    });
   });
 
   afterEach(() => {
@@ -26,8 +29,6 @@ describe('CRUD operations', () => {
   });
 
   describe('POST /authors', () => {
-    beforeEach(() => app.adapter.db.models.author.remove({}));
-
     it('creates an author', (done) => {
       request
         .post('http://localhost:3000/authors')
@@ -44,8 +45,7 @@ describe('CRUD operations', () => {
   });
 
   describe('GET /authors', () => {
-    beforeEach(() => app.adapter.db.models.author.remove({})
-      .then(() => app.adapter.create('author', author)));
+    beforeEach(() => app.adapter.create('author', author));
 
     it('returns a collection of authors', () => {
       request
