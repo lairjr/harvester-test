@@ -31,6 +31,8 @@ describe('SSE events', () => {
       const source = new EventSource('http://localhost:3000/authors/changes/stream');
       source.on('authors_i', (e) => {
         console.log('insert SSE working: ', e.data);
+        const author = JSON.parse(e.data);
+        expect(author.name).to.be.equal('Stephen King');
         done();
       });
 
