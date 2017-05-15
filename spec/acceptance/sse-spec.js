@@ -30,8 +30,7 @@ describe('SSE events', () => {
     it('emits an SSE event with the created author', (done) => {
       const source = new EventSource('http://localhost:3000/authors/changes/stream');
       source.on('authors_i', (e) => {
-        console.log('DATA ', e.data);
-        //return expect(e.data.name).to.be.equal('X');
+        console.log('insert SSE working: ', e.data);
         done();
       });
 
