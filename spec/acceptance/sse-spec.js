@@ -87,4 +87,31 @@ describe('SSE events', () => {
       }, requestTimeout);
     });
   });
+
+  context('when deleting an author', () => {
+    beforeEach(() => app.adapter.create('author', { name: 'Stephen King' })
+      .then((record) => {
+        newRecord = record;
+        return;
+      })
+    );
+
+    it('emits an SSE event with the updated author', (done) => {
+      const source = new EventSource('http://localhost:3000/authors/changes/stream');
+      source.on('authors_d', (e) => {
+        source.close();
+        // if this event is not called the test will fail
+        done();
+      });
+
+      setTimeout(() => {
+        request
+          .delete(`http://localhost:3000/authors/${newRecord.id}`)
+          .set('Content-Type', 'application/json')
+          .end((err, res) => {
+            expect(res.status).to.be.equal(204);
+          });
+      }, requestTimeout);
+    });
+  });
 });

@@ -40,6 +40,6 @@ services:
     image: mongo:2.6.8
     volumes:
       - ./scripts/:/scripts
-    command: bash -c "chmod +x /scripts/mongodb_config.sh && ./scripts/mongodb_config.sh"
+    command: bash -c "sleep 30 && chmod +x /scripts/mongodb_config.sh && ./scripts/mongodb_config.sh"
     depends_on:
       - mongodb
