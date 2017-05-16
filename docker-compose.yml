@@ -1,13 +1,15 @@
 version: '3'
 services:
-  acceptance:
+  tests:
     build: .
-    command: bash -c "sleep 40 && npm test"
+    command: npm test
     depends_on:
       - dbConfig
 
   mongodb:
     image: mongo:2.6.8
+    volumes:
+      - ./scripts/:/scripts
     ports:
       - 27017:27017
       - 28017:28017
@@ -17,6 +19,6 @@ services:
     image: mongo:2.6.8
     volumes:
       - ./scripts/:/scripts
-    command: bash -c "sleep 30 && chmod +x /scripts/mongodb_config.sh && ./scripts/mongodb_config.sh"
+    command: bash -c "sleep 10 && chmod +x /scripts/mongodb_config.sh && ./scripts/mongodb_config.sh"
     depends_on:
       - mongodb
