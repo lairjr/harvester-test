@@ -1,4 +1,4 @@
 module.exports = {
-  mongoUrl: "mongodb://localhost:27017",
-  oplogUrl: "mongodb://localhost:27017/local"
+  mongoUrl: "mongodb://mongodb:27017",
+  oplogUrl: "mongodb://mongodb:27017/local"
 };

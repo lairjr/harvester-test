@@ -1,37 +1,14 @@
 version: '3'
 services:
-  web:
-    hostname: app
+  acceptance:
     build: .
-    environment:
-      MONGODB_URL: "mongodb://mongodb"
-      PORT: 5000
-    ports:
-      - 5000:5000
-    volumes:
-      - .:/usr/src/app
-      - /usr/src/app
+    command: bash -c "sleep 40 && npm test"
     depends_on:
-      - mongodb
-    links:
-      - mongodb
-  events:
-    build: .
-    command: bash -c 'node events.js'
-    environment:
-      DEBUG: "events-reader"
-    depends_on:
-      - mongodb
-    volumes:
-      - .:/usr/src/app
-    links:
-      - mongodb
-    environment:
-      MONGODB_URL: "mongodb://mongodb"
+      - dbConfig
 
   mongodb:
     image: mongo:2.6.8
-    ports: 
+    ports:
       - 27017:27017
       - 28017:28017
     command: mongod --nojournal --noprealloc --replSet "rs" --smallfiles --oplogSize 128
