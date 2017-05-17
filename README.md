@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/agco-fuse/harvester-test.svg?branch=master)](https://travis-ci.org/agco-fuse/harvester-test)
+
 # Harvester-test
 
 ## Goal
