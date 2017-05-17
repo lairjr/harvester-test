@@ -1,13 +1,12 @@
 FROM node:6.9.4
-MAINTAINER Ian Patton <ian.patton@agcocorp.com>
+ENV HOME=/home/app/
 
-RUN mkdir -p /usr/src/app
+COPY package.json $HOME/harvesterjs/
 
-WORKDIR /usr/src/app
+WORKDIR $HOME/harvesterjs/
 
-COPY package.json /usr/src/app/
-RUN npm install
+RUN npm install --progress=false
 
-COPY . /usr/src/app/
+COPY . $HOME/harvesterjs/
 
-CMD [ "node", "index.js" ]
+CMD ["npm", "test"]

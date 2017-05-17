@@ -1,0 +1,10 @@
+language: node_js
+node_js:
+  - '6'
+services:
+  - docker
+before_script:
+  - docker-compose up -d mongodb
+  - docker-compose up -d dbConfig
+  - docker-compose build tests
+script: docker-compose run tests

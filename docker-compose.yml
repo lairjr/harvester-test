@@ -2,7 +2,7 @@ version: '3'
 services:
   tests:
     build: .
-    command: npm test
+    command: bash -c "sleep 20 && npm test"
     depends_on:
       - dbConfig
 
