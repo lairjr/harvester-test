@@ -7,16 +7,16 @@ services:
       - dbConfig
 
   mongodb:
-    image: mongo:2.6.8
+    image: mongo:3.0.0
     volumes:
       - ./scripts/:/scripts
     ports:
       - 27017:27017
       - 28017:28017
-    command: mongod --nojournal --noprealloc --replSet "rs" --smallfiles --oplogSize 128
+    command: mongod --nojournal --replSet "rs" --smallfiles --oplogSize 128
 
   dbConfig:
-    image: mongo:2.6.8
+    image: mongo:3.0.0
     volumes:
       - ./scripts/:/scripts
     command: bash -c "sleep 10 && chmod +x /scripts/mongodb_config.sh && ./scripts/mongodb_config.sh"
