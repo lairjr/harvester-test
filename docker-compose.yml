@@ -6,14 +6,19 @@ services:
     depends_on:
       - dbConfig
 
-  mongodb:
+  mongodb1:
     image: mongo:2.6.8
-    volumes:
-      - ./scripts/:/scripts
     ports:
       - 27017:27017
       - 28017:28017
-    command: mongod --nojournal --noprealloc --replSet "rs" --smallfiles --oplogSize 128
+    command: mongod --nojournal --noprealloc --replSet rs1 --smallfiles --oplogSize 128
+
+  mongodb2:
+    image: mongo:2.6.8
+    ports:
+      - 27018:27017
+      - 28018:28017
+    command: mongod --nojournal --noprealloc --replSet rs1 --smallfiles --oplogSize 128
 
   dbConfig:
     image: mongo:2.6.8
@@ -21,4 +26,5 @@ services:
       - ./scripts/:/scripts
     command: bash -c "sleep 10 && chmod +x /scripts/mongodb_config.sh && ./scripts/mongodb_config.sh"
     depends_on:
-      - mongodb
+      - mongodb1
+      - mongodb2

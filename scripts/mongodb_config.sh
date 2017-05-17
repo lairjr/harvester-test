@@ -1,22 +1,27 @@
 #!/bin/bash
-echo "Waiting for mongodb..."
-until curl http://mongodb:28017/serverStatus\?text\=1 2>&1 | grep uptime | head -1; do
+echo "Waiting for mongodb1..."
+until curl http://mongodb1:28017/serverStatus\?text\=1 2>&1 | grep uptime | head -1; do
   printf '.'
   sleep 1
 done
 
-echo curl http://mongodb:28017/serverStatus\?text\=1 2>&1 | grep uptime | head -1
-echo "mongodb is ready..."
+echo curl http://mongodb1:28017/serverStatus\?text\=1 2>&1 | grep uptime | head -1
+echo "mongodb1 is ready..."
 
 echo time now: `date +"%T" `
-mongo --host mongodb:27017 <<EOF
+mongo --host mongodb1:27017 <<EOF
    var cfg = {
-        "_id": "rs",
+        "_id": "rs1",
         "version": 1,
         "members": [
             {
                 "_id": 0,
-                "host": "mongodb:27017",
+                "host": "mongodb1:27017",
+                "priority": 2
+            },
+            {
+                "_id": 1,
+                "host": "mongodb2:27017",
                 "priority": 1
             }
         ]
