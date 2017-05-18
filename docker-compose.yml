@@ -3,6 +3,7 @@ services:
   tests:
     build: .
     command: bash -c "sleep 20 && npm test"
+    tty: true
     depends_on:
       - dbConfig
 
