@@ -114,4 +114,42 @@ describe('SSE events', () => {
       }, requestTimeout);
     });
   });
+
+  context('when passing last-event-id', () => {
+    it('returns the past events', function(done) {
+      this.timeout(5000);
+      const eventSourceInitDict = { headers: { 'Last-Event-ID': '0' } };
+      const source = new EventSource('http://localhost:3000/authors/changes/stream', eventSourceInitDict);
+      let insertedAuthors = [];
+      let deletedAuthors = [];
+      let updatedAuthors = [];
+
+      source.on('authors_i', (e) => {
+        console.log('>>>>>> ', e.data);
+        insertedAuthors.push(JSON.parse(e.data));
+      });
+
+      source.on('authors_d', (e) => {
+        console.log('>>>>>> ', e.data);
+        deletedAuthors.push(JSON.parse(e.data));
+      });
+
+      source.on('authors_u', (e) => {
+        console.log('>>>>>> ', e.data);
+        updatedAuthors.push(JSON.parse(e.data));
+      });
+
+      setTimeout(() => {
+        console.log('inserted authors >> ', insertedAuthors.length);
+        console.log('deleted authors >> ', deletedAuthors.length);
+        console.log('updated authors >> ', updatedAuthors.length);
+        expect(insertedAuthors.length).to.be.above(1);
+        expect(deletedAuthors.length).to.be.above(1);
+        expect(updatedAuthors.length).to.be.above(1);
+
+        source.close();
+        done();
+      }, 3000);
+    });
+  });
 });
