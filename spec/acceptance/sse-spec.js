@@ -125,17 +125,17 @@ describe('SSE events', () => {
       let updatedAuthors = [];
 
       source.on('authors_i', (e) => {
-        console.log('>>>>>> ', e.data);
+        console.log('authors_i: ', e.data);
         insertedAuthors.push(JSON.parse(e.data));
       });
 
       source.on('authors_d', (e) => {
-        console.log('>>>>>> ', e.data);
+        console.log('authors_d: ', e.data);
         deletedAuthors.push(JSON.parse(e.data));
       });
 
       source.on('authors_u', (e) => {
-        console.log('>>>>>> ', e.data);
+        console.log('authors_u ', e.data);
         updatedAuthors.push(JSON.parse(e.data));
       });
 
@@ -143,9 +143,9 @@ describe('SSE events', () => {
         console.log('inserted authors >> ', insertedAuthors.length);
         console.log('deleted authors >> ', deletedAuthors.length);
         console.log('updated authors >> ', updatedAuthors.length);
-        expect(insertedAuthors.length).to.be.above(1);
-        expect(deletedAuthors.length).to.be.above(1);
-        expect(updatedAuthors.length).to.be.above(1);
+        expect(insertedAuthors.length).to.be.at.least(7);
+        expect(deletedAuthors.length).to.be.at.least(7);
+        expect(updatedAuthors.length).to.be.at.least(2);
 
         source.close();
         done();
