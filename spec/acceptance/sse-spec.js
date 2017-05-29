@@ -1,4 +1,4 @@
-const harvesterApp = require('../../app/api');
+const harvesterApp = require('../../app/api')();
 const EventSource = require('eventsource');
 const requestTimeout = 1000;
 
@@ -28,7 +28,7 @@ describe('SSE events', () => {
 
   context('when creating an author', () => {
     it('emits an SSE event with the created author', (done) => {
-      const source = new EventSource('http://localhost:3000/authors/changes/stream');
+      const source = new EventSource(`${baseUrl}/authors/changes/stream`);
       source.on('authors_i', (e) => {
         console.log('insert SSE working: ', e.data);
         const parsedAuthor = JSON.parse(e.data);
@@ -39,7 +39,7 @@ describe('SSE events', () => {
 
       setTimeout(() => {
         request
-          .post('http://localhost:3000/authors')
+          .post(`${baseUrl}/authors`)
           .set('Content-Type', 'application/json')
           .send(author)
           .end((err, res) => {
@@ -67,7 +67,7 @@ describe('SSE events', () => {
     );
 
     it('emits an SSE event with the updated author', (done) => {
-      const source = new EventSource('http://localhost:3000/authors/changes/stream');
+      const source = new EventSource(`${baseUrl}/authors/changes/stream`);
       source.on('authors_u', (e) => {
         console.log('update SSE working: ', e.data);
         const parsedAuthor = JSON.parse(e.data);
@@ -78,7 +78,7 @@ describe('SSE events', () => {
 
       setTimeout(() => {
         request
-          .put(`http://localhost:3000/authors/${newRecord.id}`)
+          .put(`${baseUrl}/authors/${newRecord.id}`)
           .set('Content-Type', 'application/json')
           .send(newAuthor)
           .end((err, res) => {
@@ -97,7 +97,7 @@ describe('SSE events', () => {
     );
 
     it('emits an SSE event with the updated author', (done) => {
-      const source = new EventSource('http://localhost:3000/authors/changes/stream');
+      const source = new EventSource(`${baseUrl}/authors/changes/stream`);
       source.on('authors_d', (e) => {
         source.close();
         // if this event is not called the test will fail
@@ -106,7 +106,7 @@ describe('SSE events', () => {
 
       setTimeout(() => {
         request
-          .delete(`http://localhost:3000/authors/${newRecord.id}`)
+          .delete(`${baseUrl}/authors/${newRecord.id}`)
           .set('Content-Type', 'application/json')
           .end((err, res) => {
             expect(res.status).to.be.equal(204);
@@ -119,7 +119,7 @@ describe('SSE events', () => {
     it('returns the past events', function(done) {
       this.timeout(5000);
       const eventSourceInitDict = { headers: { 'Last-Event-ID': '0' } };
-      const source = new EventSource('http://localhost:3000/authors/changes/stream', eventSourceInitDict);
+      const source = new EventSource(`${baseUrl}/authors/changes/stream`, eventSourceInitDict);
       let insertedAuthors = [];
       let deletedAuthors = [];
       let updatedAuthors = [];

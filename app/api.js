@@ -12,24 +12,31 @@ const options = {
 };
 
 // define 2 resources
-const harvestApp = harvest(options)
-  .resource('author', {
-    name: Joi.string()
-  })
-  .onChange({
-    insert: (id) => {
-      console.log(`inserted: ${id}`);
-    },
-    update: (id) => {
-      console.log(`updated: ${id}`);
-    },
-    delete: (id) => {
-      console.log(`deleted: ${id}`);
-    }
-  })
-  .resource('book', {
-    title: Joi.string(),
-    author: 'author'
-  });
+const harvesterMaker = (observer = {}) => {
+  const harvestApp = harvest(options)
+    .resource('author', {
+      name: Joi.string()
+    })
+    .onChange({
+      insert: (id) => {
+        console.log(`inserted: ${id}`);
+        observer.setId(id);
+      },
+      update: (id) => {
+        console.log(`updated: ${id}`);
+        observer.setId(id);
+      },
+      delete: (id) => {
+        console.log(`deleted: ${id}`);
+        observer.setId(id);
+      }
+    })
+    .resource('book', {
+      title: Joi.string(),
+      author: 'author'
+    });
 
-module.exports = harvestApp;
+  return harvestApp;
+};
+
+module.exports = harvesterMaker;

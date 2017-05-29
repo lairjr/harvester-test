@@ -1,4 +1,4 @@
-const harvesterApp = require('../../app/api');
+const harvesterApp = require('../../app/api')();
 
 describe('CRUD operations', () => {
   let app;
@@ -31,7 +31,7 @@ describe('CRUD operations', () => {
   describe('POST /authors', () => {
     it('creates an author', (done) => {
       request
-        .post('http://localhost:3000/authors')
+        .post(`${baseUrl}/authors`)
         .set('Content-Type', 'application/json')
         .send(author)
         .end((err, res) => {
@@ -49,7 +49,7 @@ describe('CRUD operations', () => {
 
     it('returns a collection of authors', (done) => {
       request
-        .get('http://localhost:3000/authors')
+        .get(`${baseUrl}/authors`)
         .set('Content-Type', 'application/json')
         .end((err, res) => {
           expect(res.status).to.be.equal(200);
@@ -81,7 +81,7 @@ describe('CRUD operations', () => {
 
     it('updates the author', (done) => {
       request
-        .put(`http://localhost:3000/authors/${newRecord.id}`)
+        .put(`${baseUrl}/authors/${newRecord.id}`)
         .set('Content-Type', 'application/json')
         .send(newAuthor)
         .end((err, res) => {
@@ -104,7 +104,7 @@ describe('CRUD operations', () => {
 
     it('deletes an existing author', (done) => {
       request
-        .del(`http://localhost:3000/authors/${1200}`)
+          .del(`${baseUrl}/authors/${1200}`)
         .set('Content-Type', 'application/json')
         .end((err, res) => {
           expect(res.status).to.be.equal(204);
