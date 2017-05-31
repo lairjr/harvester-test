@@ -7,6 +7,21 @@ services:
     depends_on:
       - dbConfig
 
+  zookeeper:
+    image: wurstmeister/zookeeper
+    ports:
+      - "2181:2181"
+  kafka:
+    image: wurstmeister/kafka
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_HOST_NAME: 10.73.20.83
+      KAFKA_CREATE_TOPICS: "darksouls:1:1"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
   mongodb:
     image: mongo:3.4.0
     volumes:
